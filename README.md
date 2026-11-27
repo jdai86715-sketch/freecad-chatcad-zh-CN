@@ -14,7 +14,7 @@ Pick the agent you like: **Claude Code**, **OpenAI Codex**, **Google Antigravity
 > **Local AI is not there yet.** The local provider works and is fully integrated, but in our tests local models (qwen3:8b, qwen3.5:9b, qwen3.8:27b, on a laptop CPU and on a desktop GPU) only handled simple parts; **every real multi-feature part failed**, even when asked one feature at a time. For real work, use Codex, Claude Code or Antigravity. See [Tests](#tests) for the numbers and photos.
 
 <p align="center">
-  <img src="docs/screen-panel.png" width="96%" alt="Chat CAD docked in FreeCAD">
+  <img src="screen-panel.png" width="96%" alt="Chat CAD docked in FreeCAD">
 </p>
 
 ## Features
@@ -28,12 +28,12 @@ Pick the agent you like: **Claude Code**, **OpenAI Codex**, **Google Antigravity
 - **Agent / Plan modes:** *Agent* edits the model; *Plan* only discusses and proposes.
 
 <p align="center">
-  <img src="docs/panel-start.png" width="31%" alt="Start screen">
-  <img src="docs/conversation.png" width="31%" alt="A conversation with collapsible steps">
-  <img src="docs/model-menu.png" width="31%" alt="Provider and model menu">
+  <img src="panel-start.png" width="31%" alt="Start screen">
+  <img src="conversation.png" width="31%" alt="A conversation with collapsible steps">
+  <img src="model-menu.png" width="31%" alt="Provider and model menu">
 </p>
 
-<p align="center"><img src="docs/sketch.png" width="70%" alt="Drawing on the 3D view before asking for a change"></p>
+<p align="center"><img src="sketch.png" width="70%" alt="Drawing on the 3D view before asking for a change"></p>
 
 ## How it works
 
@@ -109,19 +109,19 @@ Then, in Chat CAD's settings, set the address to `http://<the GPU machine's Tail
 
 The wall-mount remote holder below was first modeled interactively with Chat CAD. Its features were then written down as one text description (basket, back plate with rounded top corners, countersunk screw holes, U-shaped front cut-out with rounded corners, curved side gussets, honeycomb vent, engraved text) and given to each agent in a new, empty document.
 
-<p align="center"><img src="docs/test-holder-iso.png" width="96%" alt="Same description, different agents (isometric)"></p>
+<p align="center"><img src="test-holder-iso.png" width="96%" alt="Same description, different agents (isometric)"></p>
 
 Every result was checked numerically against the original (34 589 mm³, 60 × 40 × 95 mm): single valid solid, volume, size, screw holes, countersinks, text, parameters.
 
 | Result | Isometric | Front | Time | Volume vs original | Verdict |
 |---|---|---|---|---|---|
-| **Original** (modeled interactively with Chat CAD) | <img src="docs/results/original-iso.png" width="160"> | <img src="docs/results/original-front.png" width="160"> | — | — | reference, 22 parameters |
-| **Codex** (account default model) | <img src="docs/results/codex-iso.png" width="160"> | <img src="docs/results/codex-front.png" width="160"> | 6 min 21 s | +0.04 % | ✅ practically identical; 32 parameters, everything driven by the spreadsheet. A second run (the screenshot at the top) took 8 min 18 s, −0.1 % |
-| **Claude Code** (Opus) | <img src="docs/results/claude-code-iso.png" width="160"> | <img src="docs/results/claude-code-front.png" width="160"> | 12 min 27 s | −0.01 % | ✅ identical shape; the U cut-out, gussets, honeycomb and text don't update from the spreadsheet (script-generated) |
-| **Antigravity** (Gemini 3.8 Flash High) | <img src="docs/results/antigravity-iso.png" width="160"> | <img src="docs/results/antigravity-front.png" width="160"> | 9 min 28 s | −18.4 % | ⚠️ looks right, but the basket's cavity cuts 2 mm into the back plate, leaving it **1 mm** thick behind the basket |
-| **Local qwen3:8b**, one message (laptop CPU) | <img src="docs/results/local-qwen3-8b-cpu-iso.png" width="160"> | <img src="docs/results/local-qwen3-8b-cpu-front.png" width="160"> | 25 min 41 s | −66.8 % | ❌ only a slab; first attempt produced nothing (answer cut by the length limit) |
-| **Local qwen3.5:9b**, 8 messages (desktop GPU) | <img src="docs/results/local-qwen3.5-9b-gpu-iso.png" width="160"> | <img src="docs/results/local-qwen3.5-9b-gpu-front.png" width="160"> | ~7 min | — | ❌ failed at step 3 of 8, broken geometry |
-| **Local qwen3.8:27b**, 8 messages (desktop GPU + CPU) | <img src="docs/results/local-qwen3.8-27b-gpu-iso.png" width="160"> | <img src="docs/results/local-qwen3.8-27b-gpu-front.png" width="160"> | ~24 min for 2 steps | — | ⚠️ steps 1–2 clean, but the front was left open; stopped (too slow) |
+| **Original** (modeled interactively with Chat CAD) | <img src="original-iso.png" width="160"> | <img src="original-front.png" width="160"> | — | — | reference, 22 parameters |
+| **Codex** (account default model) | <img src="codex-iso.png" width="160"> | <img src="codex-front.png" width="160"> | 6 min 21 s | +0.04 % | ✅ practically identical; 32 parameters, everything driven by the spreadsheet. A second run (the screenshot at the top) took 8 min 18 s, −0.1 % |
+| **Claude Code** (Opus) | <img src="claude-code-iso.png" width="160"> | <img src="claude-code-front.png" width="160"> | 12 min 27 s | −0.01 % | ✅ identical shape; the U cut-out, gussets, honeycomb and text don't update from the spreadsheet (script-generated) |
+| **Antigravity** (Gemini 3.8 Flash High) | <img src="antigravity-iso.png" width="160"> | <img src="antigravity-front.png" width="160"> | 9 min 28 s | −18.4 % | ⚠️ looks right, but the basket's cavity cuts 2 mm into the back plate, leaving it **1 mm** thick behind the basket |
+| **Local qwen3:8b**, one message (laptop CPU) | <img src="local-qwen3-8b-cpu-iso.png" width="160"> | <img src="local-qwen3-8b-cpu-front.png" width="160"> | 25 min 41 s | −66.8 % | ❌ only a slab; first attempt produced nothing (answer cut by the length limit) |
+| **Local qwen3.5:9b**, 8 messages (desktop GPU) | <img src="local-qwen3.5-9b-gpu-iso.png" width="160"> | <img src="local-qwen3.5-9b-gpu-front.png" width="160"> | ~7 min | — | ❌ failed at step 3 of 8, broken geometry |
+| **Local qwen3.8:27b**, 8 messages (desktop GPU + CPU) | <img src="local-qwen3.8-27b-gpu-iso.png" width="160"> | <img src="local-qwen3.8-27b-gpu-front.png" width="160"> | ~24 min for 2 steps | — | ⚠️ steps 1–2 clean, but the front was left open; stopped (too slow) |
 
 ### 3. Local models, one feature per message
 
@@ -134,7 +134,7 @@ Same part, split into 8 short messages in one conversation (basket, back plate, 
 | qwen3.5:9b | desktop GPU (RX 7600, all layers on GPU) | ~21–40 tok/s, ~1 min/step | ❌ step 3 (basket cavity barely cut; edge selection) |
 | qwen3.8:27b | desktop GPU + CPU (28 % on GPU) | ~1 tok/s, ~9–15 min/step | ⚠️ steps 1–2 clean and valid, but it opened the front instead of the back; stopped after step 2 (too slow: all 8 steps would take well over an hour) |
 
-<p align="center"><img src="docs/test-local-steps.png" width="96%" alt="qwen3.8:27b building the holder step by step"></p>
+<p align="center"><img src="test-local-steps.png" width="96%" alt="qwen3.8:27b building the holder step by step"></p>
 
 **Takeaways (honest):**
 - For real parts, today's cloud agents are far ahead. Codex was the fastest and most faithful in these tests.
