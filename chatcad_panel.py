@@ -154,6 +154,9 @@ class ChatPanel(QtWidgets.QWidget):
         m.addSeparator()
         add("folder", "打开附件文件夹", self._open_attachments_dir)
         add("file-text", "打开上次请求日志", self._open_log, os.path.exists(self._log_path()))
+        m.addSeparator()
+        add("download", "导出 DWG…", self._export_dwg)
+        add("settings", "DWG 转换器设置…", self._pick_oda_converter)
         dock = self.title.dock
         if dock is not None:
             m.addSeparator()
@@ -1041,6 +1044,50 @@ class ChatPanel(QtWidgets.QWidget):
             return ("本地 AI 服务无响应",
                     "请启动 LM Studio 或 llama.cpp 服务，并在设置中检查服务地址。")
         return "本地 AI 尚未就绪", html.escape(msg or "")
+
+    # --- DWG 导出 -----------------------------------------------------------
+
+    def _oda_converter(self):
+        import chatcad_dwg as D
+        return D.find_converter(App.ParamGet(PREFS).GetString("OdaPath", ""))
+
+    def _pick_oda_converter(self):
+        path, _ = QtWidgets.QFileDialog.getOpenFileName(
+            self, "选择 ODAFileConverter 程序", "",
+            "ODAFileConverter (ODAFileConverter*.exe ODAFileConverter);;所有文件 (*)")
+        if path:
+            App.ParamGet(PREFS).SetString("OdaPath", path)
+            self._notice(f"已设置 DWG 转换器：{path}")
+
+    def _export_dwg(self):
+        import chatcad_dwg as D
+        doc = App.ActiveDocument
+        if doc is None:
+            self._notice("没有打开的文档，无法导出 DWG。")
+            return
+        conv = self._oda_converter()
+        if not conv:
+            self._notice("未找到 ODA File Converter。DWG 导出需要先安装它"
+                         "（免费，https://www.opendesign.com/guestfiles/oda_file_converter），"
+                         "或在本菜单的“DWG 转换器设置…”中手动指定程序位置。")
+            return
+        if doc.FileName:
+            default = os.path.splitext(doc.FileName)[0] + ".dwg"
+        else:
+            default = (doc.Label or "模型") + ".dwg"
+        path, _ = QtWidgets.QFileDialog.getSaveFileName(self, "导出 DWG", default, "DWG 文件 (*.dwg)")
+        if not path:
+            return
+        QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+        try:
+            out, n = D.export_document_dwg(doc, path, conv,
+                                           App.ParamGet(PREFS).GetString("DwgVersion", D.DEFAULT_VERSION))
+        except D.DwgError as e:
+            self._notice(str(e))
+            return
+        finally:
+            QtWidgets.QApplication.restoreOverrideCursor()
+        self._notice(f"已导出 DWG（{n} 个对象，边线几何）：{out}")
 
     def _open_settings(self):
         from chatcad_settings import LocalSettingsDialog

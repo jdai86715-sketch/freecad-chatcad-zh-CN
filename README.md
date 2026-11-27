@@ -2,7 +2,7 @@
 
 [简体中文说明](README_zh-CN.md) · English
 
-> **About this repository:** This is a Simplified Chinese localization of the upstream project [freecad-chatcad](https://github.com/Vittuu/freecad-chatcad) by **Vittuu**. The original work, design and most of the code are theirs; this repository only adds the Simplified Chinese interface, Chinese prompts for local models, a Chinese README, and Chinese-localized test assertions. It is an unofficial localization, not the upstream project. License: LGPL-2.1, same as upstream (see [LICENSE](LICENSE)).
+> **About this repository:** This is a Simplified Chinese localization of the upstream project [freecad-chatcad](https://github.com/Vittuu/freecad-chatcad) by **Vittuu**. The original work, design and most of the code are theirs; this repository adds the Simplified Chinese interface, Chinese prompts for local models, a Chinese README, Chinese-localized test assertions, and a DWG export feature (via the free ODA File Converter, see the Chinese README). It is an unofficial localization, not the upstream project. License: LGPL-2.1, same as upstream (see [LICENSE](LICENSE)).
 
 An AI agent side panel for [FreeCAD](https://www.freecad.org/). Describe a part, point at a face, or scribble on the 3D view, and an agent models it for you as a **parametric** FreeCAD document you can keep tweaking by hand.
 
